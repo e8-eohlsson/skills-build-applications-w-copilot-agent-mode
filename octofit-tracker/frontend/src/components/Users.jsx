@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
-import { fetchCollection } from '../api';
+import { apiBaseUrl, fetchCollection } from '../api';
+
+const usersEndpoint = `${apiBaseUrl}/api/users/`;
 
 function Users() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchCollection('users').then(setUsers).catch((requestError) => setError(requestError.message));
+    fetchCollection(usersEndpoint, 'users').then(setUsers).catch((requestError) => setError(requestError.message));
   }, []);
 
   if (error) return <p className="empty-state">{error}</p>;

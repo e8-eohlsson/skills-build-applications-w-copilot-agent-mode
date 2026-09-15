@@ -17,8 +17,9 @@ function collectionFromPayload(payload, resource) {
   return [];
 }
 
-export async function fetchCollection(resource) {
-  const response = await fetch(apiUrl(resource));
+export async function fetchCollection(resourceOrUrl, resource = resourceOrUrl) {
+  const endpoint = resourceOrUrl.startsWith('http') ? resourceOrUrl : apiUrl(resourceOrUrl);
+  const response = await fetch(endpoint);
   if (!response.ok) {
     throw new Error(`Could not load ${resource} (${response.status})`);
   }
